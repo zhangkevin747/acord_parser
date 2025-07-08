@@ -123,7 +123,7 @@ import streamlit as st
 
 # --- Page Config ---
 st.set_page_config(
-    page_title="ACORD Parser",
+    page_title="PARSE",
     layout="centered"
 )
 
@@ -133,11 +133,11 @@ logo = Image.open("PLMR_BIG.png")  # Ensure logo.png is in the same folder or ad
 st.image(logo, use_column_width=True)
 
 # --- Title ---
-st.markdown("<h2 style='text-align: center;'>ACORD Form Parser</h2>", unsafe_allow_html=True)
+st.markdown("<h2 style='text-align: center;'>ACORD Reader & Simple Extractor</h2>", unsafe_allow_html=True)
 st.markdown("---")
 
 # --- File Upload ---
-uploaded_file = st.file_uploader("Upload an ACORD 129 PDF", type=["pdf"])
+uploaded_file = st.file_uploader("Upload an ACORD PDF", type=["pdf"])
 
 if uploaded_file:
     with st.spinner("Processing the uploaded document..."):
