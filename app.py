@@ -130,7 +130,7 @@ st.set_page_config(
 # --- Logo ---
 from PIL import Image
 logo = Image.open("PLMR_BIG.png")  # Ensure logo.png is in the same folder or adjust the path
-st.image(logo, use_column_width=True)
+st.image(logo, use_container_width=True)
 
 # --- Title ---
 st.markdown("<h2 style='text-align: center;'>ACORD Form Parser</h2>", unsafe_allow_html=True)
