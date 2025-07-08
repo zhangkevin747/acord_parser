@@ -119,28 +119,46 @@ def generate_excel(vehicle_df, garage_df):
     output.seek(0)
     return output
 
-# --- Streamlit UI ---
-st.title("🚗 ACORD Vehicle + Garage PDF Extractor")
+import streamlit as st
 
-uploaded_file = st.file_uploader("Upload your ACORD PDF", type=["pdf"])
+# --- Page Config ---
+st.set_page_config(
+    page_title="ACORD Parser",
+    layout="centered"
+)
+
+# --- Logo ---
+from PIL import Image
+logo = Image.open("PLMR_BIG.png")  # Ensure logo.png is in the same folder or adjust the path
+st.image(logo, use_column_width=True)
+
+# --- Title ---
+st.markdown("<h2 style='text-align: center;'>ACORD Form Parser</h2>", unsafe_allow_html=True)
+st.markdown("---")
+
+# --- File Upload ---
+uploaded_file = st.file_uploader("Upload an ACORD 129 PDF", type=["pdf"])
+
 if uploaded_file:
-    with st.spinner("Extracting..."):
+    with st.spinner("Processing the uploaded document..."):
         lines = extract_lines_from_pdf(uploaded_file)
         vehicle_df = full_block_vehicle_parser(lines)
         garage_df = garage_location_parser(lines)
         excel_file = generate_excel(vehicle_df, garage_df)
 
-    st.success("✅ Extraction complete!")
+    st.success("Extraction complete. You can now download the parsed Excel file.")
 
+    # --- Download Button ---
     st.download_button(
-        label="📥 Download Excel",
+        label="Download Excel File",
         data=excel_file,
         file_name="acord_output.xlsx",
         mime="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
     )
 
-    if st.checkbox("Show parsed vehicle table"):
+    # --- Optional Data Preview ---
+    with st.expander("View Parsed Vehicle Table"):
         st.dataframe(vehicle_df)
 
-    if st.checkbox("Show parsed garage table"):
+    with st.expander("View Parsed Garage Table"):
         st.dataframe(garage_df)
